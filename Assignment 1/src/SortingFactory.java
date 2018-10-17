@@ -1,5 +1,9 @@
 
-
+/**
+ * Modified from original author @author David Guy Brizan
+ * @author Andrew
+ *
+ */
 public class SortingFactory {
 
 	public final String defaultAlgorithm = "newsort";  // If an improper algorithm name is given, which should be used?

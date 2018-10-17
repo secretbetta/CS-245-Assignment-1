@@ -4,12 +4,20 @@ public class NewSort implements SortingAlgorithm {
 	
 	public void sort(double[] arr, int runsize) {
 		ArrayList<Integer> walls = findRuns(arr, runsize);
-		printMini(arr, 0, arr.length - 1, "After find runs: ");
-		System.out.println("Walls: " + walls);
 		
 		//Do merging here using walls
-		
-		printMini(arr, 0, arr.length - 1, "FullArray: ");
+		while (walls.size() > 2) {
+			for (int x = 0; x < walls.size() - 2; x++) {
+				merge(arr, walls.get(x), walls.get(x + 2) - 1, walls.get(x + 1) - 1);
+				walls.remove(x + 1);
+			}
+		}
+		double last = arr[arr.length - 1];
+		for (int x = arr.length - 1; x > 1; x--) {
+			if (last < arr[x]) {
+				arr[x + 1] = arr[x];
+			}
+		}
 	}
 	
 	public static ArrayList<Integer> findRuns(double[] arr, int runsize) {
@@ -19,7 +27,7 @@ public class NewSort implements SortingAlgorithm {
 		int runstart = 0;
 		int runend = 0;
 		int temp1 = runstart;
-		int temp2;
+		
 		//Find runs
 		for (int x = 1; x < arr.length; x++) {
 			min = arr[x - 1];
@@ -36,37 +44,28 @@ public class NewSort implements SortingAlgorithm {
 					x++;
 				}
 				
-				temp2 = runend;
-				if (temp2 == 0) {
-					temp2 = 1;
-				}
-				
-				if ((runstart - runend) + 1 >= runsize) {
-					QuickSort.sort(arr, temp1, temp2 - 1);
-					printMini(arr, runend, runstart, "Run: ");
+				if (count == runsize) {
+					QuickSort.sort(arr, temp1, runend - 1);
 					temp1 = runstart;
 					walls.add(runend);
 					walls.add(runstart);
 				}
 			}
 		}
-		if (!walls.contains(19)) {
-			walls.add(19);
+		
+		QuickSort.sort(arr, temp1, arr.length - 1);
+		
+		if (!walls.contains(arr.length - 1)) {
+			walls.add(arr.length - 1);
 		}
+		
 		if (!walls.contains(0)) {
 			walls.add(0, 0);
 		}
+		
 		return walls;
 	}
 	
-	public static void printMini(double[] arr, int l, int h, String label) {
-		System.out.print(label);
-		for (int x = l; x < h; x++) {
-			System.out.print(arr[x] + " ");
-		}
-		System.out.println(arr[h]);
-	}
-
 	/**
 	 * Merges two arrays while comparing values to sort
 	 * @param a array
@@ -115,32 +114,5 @@ public class NewSort implements SortingAlgorithm {
 			index++;
 			index2++;
 		}
-	}
-	
-	public static void print(int[] arr, int start, int end) {
-		for (int x = start; x < end - 1; x++) {
-			System.out.print(arr[x] + " ");
-		}
-		System.out.println(arr[end - 1]);
-	}
-	
-	public static void main(String[] args) {
-////		double[] arr = {10.0, 18.0, 16.0, 12.0, 12.0, 13.0, 10.0, 1.0, 6.0,
-////		16.0, 11.0, 4.0, 16.0, 1.0, 19.0, 5.0, 13.0, 13.0, 4.0, 5.0};
-////		double[] arr = {66, 7, 82, 14, 96, 99, 76};
-		
-		NewSort o = new NewSort();
-		int length = 20;
-		double[] arr = new double[length];
-		
-		for (int x = 0; x < length; x++) {
-			arr[x] = (int)(Math.random()*100 + 1);
-		}
-		
-		int runsize = 3;
-		printMini(arr, 0, arr.length - 1, "Start: ");
-		System.out.println("Runsize: " + runsize);
-		System.out.println();
-		o.sort(arr, runsize);
 	}
 }

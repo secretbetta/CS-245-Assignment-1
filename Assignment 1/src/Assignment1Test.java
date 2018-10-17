@@ -6,7 +6,8 @@ import java.util.Random;
  * Assignment1Test
  * A class which manages various sorting algorithms and reports the timing of them.
  * This main class contains some basic code to get started.
- * @author Andrew
+ * Modified by @author Andrew
+ * Original author @author David Guy Brizan
  *
  */
 public class Assignment1Test {
@@ -172,7 +173,7 @@ public class Assignment1Test {
 				double[] copy = copyArray();
 				// b) Have the algorithm sort the copy ... while timing it.
 				long start = System.currentTimeMillis();
-				sort.sort(copy, 3);
+				sort.sort(copy, 16);
 				// System.out.println("Sorting took: " + (System.currentTimeMillis() - start) + " ms.");
 				long total_time = System.currentTimeMillis() - start;
 				System.out.print(total_time + " ms.\t");
